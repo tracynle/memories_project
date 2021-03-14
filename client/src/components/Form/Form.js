@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { useDispatch } from 'react-redux';
-import { createPost } from '../../actions/posts';
-
+import { createPost, updatePost } from '../../actions/posts';
 
 import useStyles from './styles';
 
-const Form = () => {
+// get current id from post you're on
+const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState({
         creator: '', 
         title: '', 
@@ -16,26 +16,46 @@ const Form = () => {
         tags: '',
         selectedFile: ''
     });
+    // return updated post if it has the same id as current post id
+    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
 
     const classes = useStyles();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(post) setPostData(post);
+    }, [post])
 
     // send over the post request with all the data the users submits
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(createPost(postData)); // pass the post data from state to dispatch
+        if(currentId) {
+            dispatch(updatePost(currentId, postData));
+        } else {
+            dispatch(createPost(postData)); // pass the post data from state to dispatch
+        }
+        
+        clear();
     }
-
+    // clears the form
     const clear = () => {
-
+        setCurrentId = null;
+        // update the state into empty values
+        setPostData({
+            creator: '', 
+            title: '', 
+            message: '',
+            tags: '',
+            selectedFile: ''
+        })
     }
 
 
     return (
         <Paper className= { classes.paper }>
             <form autoComplete='off' noValidate className={ `${classes.root} ${classes.form}` } onSubmit= { handleSubmit }>
-                <Typography variant='h6'>Creating a Memory</Typography>
+                <Typography variant='h6'>{ currentId ? 'Editing' : 'Creating' } a Memory</Typography>
                 <TextField 
                     name='creator' variant='outlined' label='Creator' fullWidth value={ postData.creator } // values stored in the state
                     onChange={(e) => setPostData({ ...postData, creator: e.target.value })} 

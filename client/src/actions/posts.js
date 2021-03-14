@@ -1,7 +1,7 @@
 import * as api from '../api'; // imports everything from the actions as api.
 
 // Action Creators- are functions that return actions - actions is an object that contains a type and payload
-// we need to use redux thunk to create an async call to get acces to dispatch
+// we need to use redux thunk to create an async call to get access to dispatch
 export const getPosts = () => async(dispatch) => { 
     try {
         // fetch all the data from the api
@@ -25,6 +25,30 @@ export const createPost = (post) => async (dispatch) => {
         dispatch({
             type: 'CREATE',
             payload: data
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updatePost = (id, post) => async (dispatch) => {
+    try {
+        const { data } = await api.updatePost(id, post);
+        dispatch({ 
+            type: 'UPDATE',
+            payload: data
+        })
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+export const deletePost = (id) => async (dispatch) => {
+    try {
+        await api.deletePost(id);
+        dispatch({
+            type: 'DELETE',
+            payload: id
         });
     } catch (error) {
         console.log(error);
