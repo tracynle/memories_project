@@ -23,7 +23,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(post) setPostData(post);
+        if(post) setPostData(post); // if post exists set the post data
     }, [post])
 
     // send over the post request with all the data the users submits
