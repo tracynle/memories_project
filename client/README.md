@@ -12,3 +12,5 @@ This application allows you to create, delete, update, and like posts.
 - Express
 - Heroku
 - Netlify
+
+### View Project: [HERE](https://memories-project-react-redux.netlify.app/).
