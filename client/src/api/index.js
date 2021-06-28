@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // url points to our backend routes
-const url = 'http://localhost:5000/posts';
+const url = 'https://memories-project-react-redux.herokuapp.com/posts';
 
 // make a call to get all the posts from the db
 export const fetchPosts = () => axios.get(url);
