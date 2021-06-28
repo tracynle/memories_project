@@ -36,12 +36,12 @@ const Post = ( { post, setCurrentId }) => {
             </div>
             <Typopgraphy variant='h5' className={classes.title} gutterBottom>{post.title}</Typopgraphy>
             <CardContent>
-                <Typopgraphy variant='h5' gutterBottom>{post.message}</Typopgraphy>
+                <Typopgraphy variant='body2' color="texSecondary" component="p">{post.message}</Typopgraphy>
             </CardContent>
             <CardActions className={classes.cardActions}>
                 <Button size='small' color='primary' onClick={() => dispatch(likePost(post._id)) }>
                     <ThumbUpAltIcon fontSize='small' />
-                    Like
+                    &nbsp; Like &nbsp;
                     {post.likeCount}
                 </Button>
                 <Button size='small' color='primary' onClick={() => dispatch(deletePost(post._id)) }>
